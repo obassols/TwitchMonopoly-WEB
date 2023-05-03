@@ -1,0 +1,10 @@
+<div *ngIf="square.type !=='property'" class="card">
+  <h2>{{ square.name }}</h2>
+  <img [src]="getImgSrc(square)" />
+</div>
+
+<div *ngIf="square.type === 'property'" class="card">
+  <div class="property-bar" [ngStyle]="{ 'background-color': square.color }"></div>
+  <h2>{{ square.shortName }}</h2>
+</div>
+

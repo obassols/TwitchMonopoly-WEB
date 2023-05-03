@@ -1,0 +1,38 @@
+<div class="table">
+  <div class="board">
+    <div class="center">
+      <div class="community-deck">
+        <h2 class="label">Community Chest</h2>
+        <div class="deck"></div>
+      </div>
+      <h1 class="title">MONOPOLY</h1>
+      <div class="big-square">
+        <h2>TEST</h2>
+      </div>
+      <div class="chance-deck">
+        <h2 class="label">Chance</h2>
+        <div class="deck"></div>
+      </div>
+    </div>
+    <div class="row row-0">
+      <div class="square" *ngFor="let square of rows[0]">
+        <app-square [square]="square"></app-square>
+      </div>
+    </div>
+    <div class="row row-1">
+      <div class="square" *ngFor="let square of rows[1]">
+        <app-square [square]="square"></app-square>
+      </div>
+    </div>
+    <div class="row row-2">
+      <div class="square" *ngFor="let square of rows[2]">
+        <app-square [square]="square"></app-square>
+      </div>
+    </div>
+    <div class="row row-3">
+      <div class="square" *ngFor="let square of rows[3]">
+        <app-square [square]="square"></app-square>
+      </div>
+    </div>
+  </div>
+</div>

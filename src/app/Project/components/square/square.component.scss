@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid black;
+  width: 100% !important;
+  height: 100% !important;
+
+  .property-bar {
+    height: 20%;
+    width: 100%;
+  }
+
+  h2 {
+    text-align: center;
+    width: 80%;
+    font-size: 1vh;
+    font-family: 'Bruno Ace', cursive;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
