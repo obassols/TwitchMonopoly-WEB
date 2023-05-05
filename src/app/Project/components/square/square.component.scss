@@ -8,10 +8,49 @@
   border: 1px solid black;
   width: 100% !important;
   height: 100% !important;
+  font-family: 'Bruno Ace', cursive;
+
+  &.left {
+    flex-direction: row-reverse;
+
+    .property-bar {
+      height: calc(100% - 1px);
+      width: 20%;
+    }
+
+    h2 {
+      transform: rotate(90deg) translate(0, -50%);
+    }
+
+    img {
+      height: 80%;
+      transform: rotate(90deg) translate(0, -50%);
+    }
+  }
+
+  &.right {
+    flex-direction: row;
+    height: 100%;
+    width: 20%;
+
+    .property-bar {
+      height: calc(100% - 1px);;
+      width: 20%;
+    }
+
+    h2 {
+      transform: rotate(-90deg) translate(0, -20%);
+    }
+
+    img {
+      height: 80%;
+      transform: rotate(-90deg) translate(0, -20%);
+    }
+  }
 
   .property-bar {
     height: 20%;
-    width: 100%;
+    width: calc(100% - 1px);
   }
 
   h2 {
@@ -22,7 +61,100 @@
   }
 
   img {
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    object-fit: contain;
   }
 }
+
+.go {
+
+  img {
+    width: 80%;
+    object-fit: contain;
+  }
+}
+
+.jail {
+  p {
+    margin: 0;
+    font-size: 1.75vh;
+  }
+
+  .jail-top {
+    display: flex;
+    width: 100%;
+    height: 75%;
+  }
+
+  .jail-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    writing-mode: vertical-rl;
+  }
+
+  .jail-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 25%;
+  }
+
+  .jail-container {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orange;
+
+    img {
+      width: 60%;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+.parking {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: rotate(-45deg);
+
+  p {
+    margin: 0;
+    font-size: 1.75vh;
+  }
+
+  img {
+    width: 60%;
+    object-fit: contain;
+  }
+}
+
+.go_to_jail {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: rotate(225deg);
+
+  p {
+    margin: 0;
+    font-size: 1.5vh;
+  }
+
+  img {
+    width: 60%;
+    object-fit: contain;
+  }
+}
+

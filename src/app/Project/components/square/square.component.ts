@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class SquareComponent {
   @Input() square: any;
+  @Input() direction: string = '';
   
   constructor() { }
 
@@ -15,27 +16,28 @@ export class SquareComponent {
   }
 
   getImgSrc(square: any): string {
-    if (square.type === 'chance') {
-      return 'assets/chance.png';
-    } else if (square.type === 'community_chest') {
-      return 'assets/community_chest.png';
-    } else if (square.type === 'go') {
-      return 'assets/go.png';
-    } else if (square.type === 'go_to_jail') {
-      return 'assets/go_to_jail.png';
-    } else if (square.type === 'jail') {
-      return 'assets/jail.png';
-    } else if (square.type === 'free_parking') {
-      return 'assets/parking.png';
-    } else if (square.type === 'station') {
-      return 'assets/station.png';
-    } else if (square.type === 'supplies') {
-      if (square.shortName === 'EC') {
-        return 'assets/electric.png';
-      } else if (square.shortName === 'WC') {
-        return 'assets/water.png';
-      }
-    }
-    return '';
+    const IMAGE_URLS: any = {
+      chance: 'assets/chance.png',
+      community_chest: 'assets/community_chest.png',
+      go: 'assets/go.png',
+      go_to_jail: 'assets/go_to_jail.png',
+      jail: 'assets/jail.png',
+      free_parking: 'assets/parking.png',
+      station: 'assets/station.png',
+      tax: 'assets/tax.png',
+      supply: {
+        EC: 'assets/electric.png',
+        WW: 'assets/water.png',
+      },
+    };
+
+    const imageUrl =
+      square.type in IMAGE_URLS
+        ? typeof IMAGE_URLS[square.type] === 'string'
+          ? IMAGE_URLS[square.type]
+          : IMAGE_URLS[square.type][square.shortName]
+        : undefined;
+
+    return imageUrl ?? 'defaultImageUrl';
   }
 }
