@@ -9,10 +9,6 @@ export class ApiService {
   constructor(private http: HttpClient) { }
   serverUrl = 'http://localhost:4000';
 
-  getAllSquares() {
-    return this.http.get(`${this.serverUrl}/square`, this.createHeader());
-  }
-
   private createHeader() {
     const header = {
       'Access-Control-Allow-Origin': '*',
@@ -22,4 +18,13 @@ export class ApiService {
     }
     return { headers: new HttpHeaders(header) }
   }
+
+  getAllSquares() {
+    return this.http.get(`${this.serverUrl}/square`, this.createHeader());
+  }
+
+  getRents(squareId: number) {
+    return this.http.get(`${this.serverUrl}/square/${squareId}/rent`, this.createHeader());
+  }
+  
 }
