@@ -1,0 +1,49 @@
+<div *ngIf="square.type === 'property'" class="square">
+  <div class="property-bar" [ngStyle]="{ 'background-color': square.color }"></div>
+  <h2 class="name">{{ square.name }}</h2>
+  <div class="rents">
+    <div *ngFor="let rent of square.rents; index as i">
+      <p *ngIf="rent.upgrades === 0">Base: {{ rent.rent }}</p>
+      <p *ngIf="i !== 0 && i !== 5">
+        With {{ rent.upgrades }} {{ rent.upgrades === 1 ? 'house' : 'houses'}}: {{ rent.rent }}
+      </p>
+      <p *ngIf="i === 5">Hotel: {{ rent.rent }}</p>
+    </div>
+  </div>
+  <div class="footer">
+    <p>Price: {{ square.price }} €</p>
+  </div>
+</div>
+
+<div *ngIf="square.type === 'station' || square.type === 'supply'" class="square">
+  <img [src]="getImgSrc(square)" class="header" />
+  <h2 class="name">{{ square.name }}</h2>
+  <div class="rents">
+    <div *ngFor="let rent of square.rents;">
+      <p *ngIf="square.type === 'station'">With {{ rent.upgrades }} {{ rent.upgrades === 1 ? 'station' : 'stations' }}: {{ rent.rent }}</p>
+      <p *ngIf="square.type === 'supply'">With {{ rent.upgrades }} {{ rent.upgrades === 1 ? 'supply' : 'supplies' }}: {{ rent.rent }}x</p>
+    </div>
+  </div>
+  <div class="footer">
+    <p>Price: {{ square.price }} €</p>
+  </div>
+</div>
+
+<div *ngIf="square.type === 'chance' || square.type === 'community_chest'" class="square card"
+  [ngClass]="[square.type]"
+  [ngStyle]="{
+    'background-image': 'url('+getImgSrc(square)+')',
+    'background-color': square.type === 'chance' ? '#EF843D' : '#63A6D7'
+  }">
+  <h2 class="name">{{ square.name }}</h2>
+  <div class="description">
+    {{ card?.description }}
+  </div>
+</div>
+
+<div *ngIf="square.type === 'tax'" class="square tax">
+  <h2 class="name">{{ square.name }}</h2>
+  <img [src]="getImgSrc(square)" />
+  <div class="footer">
+    Pay {{ square.amount }} €
+  </div>
