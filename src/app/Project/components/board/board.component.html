@@ -5,14 +5,23 @@
           {{ 'PLAYER 1' }}
       </div>
       <div class="squares">
-        <div *ngFor="let property of properties" class="property">
-          <div class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
+        <div *ngFor="let property of game.players[0].properties" class="property">
+          <div *ngIf="property.type === 'property'" class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
+          <div *ngIf="property.type === 'station'" class="bar" [ngStyle]="{ 'background-color': 'black' }"></div>
+          <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
           <div class="body">
             <div [ngStyle]="{'color': property.upgrades > -1 ? 'black' : 'red'}">{{ property.shortName }}</div>
-            <div *ngIf="property.upgrades < 0">
+            <div *ngIf="property.upgrades < 0 && property.type === 'property'">
               <i class="bi bi-house-slash-fill" style="color:red"></i>
             </div>
-            <div *ngIf="property.upgrades > -1 && property.upgrades < 5">
+            <div *ngIf="property.type !== 'property' && property.upgrades < 0">
+              <i class="bi bi-gear-fill" style="color:red"></i>
+            </div>
+            <div *ngIf="property.type !== 'property' && property.upgrades > -1">
+              {{ property.upgrades }}
+              <i class="bi bi-gear-fill" style="color:green"></i>
+            </div>
+            <div *ngIf="property.upgrades > -1 && property.upgrades < 5 && property.type === 'property'">
               {{ property.upgrades }}
               <i class="bi bi-house-fill" style="color:green"></i>
             </div>
@@ -22,9 +31,13 @@
             </div>
           </div>
         </div>
+        <div *ngFor="let card of game.players[0].cards" class="jail_card"
+          [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
+          <i class="bi bi-x-circle"></i>
+        </div>
       </div>
       <div class="footer">
-        {{ 1000 | number }} €
+        {{ game.players[0].money | number }} €
       </div>
     </div>
     <div class="player player3">
@@ -32,14 +45,23 @@
         {{ 'PLAYER 3' }}
       </div>
       <div class="squares">
-        <div *ngFor="let property of properties" class="property">
-          <div class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
+        <div *ngFor="let property of game.players[2].properties" class="property">
+          <div *ngIf="property.type === 'property'" class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
+          <div *ngIf="property.type === 'station'" class="bar" [ngStyle]="{ 'background-color': 'black' }"></div>
+          <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
           <div class="body">
             <div [ngStyle]="{'color': property.upgrades > -1 ? 'black' : 'red'}">{{ property.shortName }}</div>
-            <div *ngIf="property.upgrades < 0">
+            <div *ngIf="property.upgrades < 0 && property.type === 'property'">
               <i class="bi bi-house-slash-fill" style="color:red"></i>
             </div>
-            <div *ngIf="property.upgrades > -1 && property.upgrades < 5">
+            <div *ngIf="property.type !== 'property' && property.upgrades < 0">
+              <i class="bi bi-gear-fill" style="color:red"></i>
+            </div>
+            <div *ngIf="property.type !== 'property' && property.upgrades > -1">
+              {{ property.upgrades }}
+              <i class="bi bi-gear-fill" style="color:green"></i>
+            </div>
+            <div *ngIf="property.upgrades > -1 && property.upgrades < 5 && property.type === 'property'">
               {{ property.upgrades }}
               <i class="bi bi-house-fill" style="color:green"></i>
             </div>
@@ -49,9 +71,12 @@
             </div>
           </div>
         </div>
+        <div *ngFor="let card of game.players[2].cards" class="jail_card" [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
+          <i class="bi bi-x-circle"></i>
+        </div>
       </div>
       <div class="footer">
-        {{ 1000 | number }} €
+        {{ game.players[2].money | number }} €
       </div>
     </div>
   </div>
@@ -64,9 +89,9 @@
         </div>
       </div>
       <h1 class="title">MONOPOLY</h1>
-      <!-- <div class="big-square">
-        <app-square [square]="rows[0][5]"></app-square>
-      </div> -->
+      <div *ngIf="actualSquare" class="big-square">
+        <app-big-square [square]="actualSquare" [card]="actualCard"></app-big-square>
+      </div>
       <div class="chance-deck">
         <h2 class="label">Chance</h2>
         <div class="deck">
@@ -95,7 +120,8 @@
       </div>
     </div>
     <div class="tokens">
-      <div *ngFor="let i of [1,2,3,4]" [class]="'token player' + i">
+      <div *ngFor="let player of game.players; index as i" [class]="'token player' + (i + 1)"
+        [ngStyle]="{'bottom': player.bottom + 'vh', 'right': player.right + 'vh'}">
       </div>
     </div>
   </div>
@@ -105,14 +131,23 @@
         {{ 'PLAYER 2' }}
       </div>
       <div class="squares">
-        <div *ngFor="let property of properties" class="property">
-          <div class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
+        <div *ngFor="let property of game.players[1].properties" class="property">
+          <div *ngIf="property.type === 'property'" class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
+          <div *ngIf="property.type === 'station'" class="bar" [ngStyle]="{ 'background-color': 'black' }"></div>
+          <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
           <div class="body">
             <div [ngStyle]="{'color': property.upgrades > -1 ? 'black' : 'red'}">{{ property.shortName }}</div>
-            <div *ngIf="property.upgrades < 0">
+            <div *ngIf="property.upgrades < 0 && property.type === 'property'">
               <i class="bi bi-house-slash-fill" style="color:red"></i>
             </div>
-            <div *ngIf="property.upgrades > -1 && property.upgrades < 5">
+            <div *ngIf="property.type !== 'property' && property.upgrades < 0">
+              <i class="bi bi-gear-fill" style="color:red"></i>
+            </div>
+            <div *ngIf="property.type !== 'property' && property.upgrades > -1">
+              {{ property.upgrades }}
+              <i class="bi bi-gear-fill" style="color:green"></i>
+            </div>
+            <div *ngIf="property.upgrades > -1 && property.upgrades < 5 && property.type === 'property'">
               {{ property.upgrades }}
               <i class="bi bi-house-fill" style="color:green"></i>
             </div>
@@ -122,9 +157,12 @@
             </div>
           </div>
         </div>
+        <div *ngFor="let card of game.players[1].cards" class="jail_card" [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
+          <i class="bi bi-x-circle"></i>
+        </div>
       </div>
       <div class="footer">
-        {{ 1000 | number }} €
+        {{ game.players[1].money | number }} €
       </div>
     </div>
     <div class="player player4">
@@ -132,14 +170,23 @@
         {{ 'PLAYER 4' }}
       </div>
       <div class="squares">
-        <div *ngFor="let property of properties" class="property">
-          <div class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
+        <div *ngFor="let property of game.players[3].properties" class="property">
+          <div *ngIf="property.type === 'property'" class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
+          <div *ngIf="property.type === 'station'" class="bar" [ngStyle]="{ 'background-color': 'black' }"></div>
+          <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
           <div class="body">
             <div [ngStyle]="{'color': property.upgrades > -1 ? 'black' : 'red'}">{{ property.shortName }}</div>
-            <div *ngIf="property.upgrades < 0">
+            <div *ngIf="property.upgrades < 0 && property.type === 'property'">
               <i class="bi bi-house-slash-fill" style="color:red"></i>
             </div>
-            <div *ngIf="property.upgrades > -1 && property.upgrades < 5">
+            <div *ngIf="property.type !== 'property' && property.upgrades < 0">
+              <i class="bi bi-gear-fill" style="color:red"></i>
+            </div>
+            <div *ngIf="property.type !== 'property' && property.upgrades > -1">
+              {{ property.upgrades }}
+              <i class="bi bi-gear-fill" style="color:green"></i>
+            </div>
+            <div *ngIf="property.upgrades > -1 && property.upgrades < 5 && property.type === 'property'">
               {{ property.upgrades }}
               <i class="bi bi-house-fill" style="color:green"></i>
             </div>
@@ -149,10 +196,22 @@
             </div>
           </div>
         </div>
+        <div *ngFor="let card of game.players[3].cards" class="jail_card" [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
+          <i class="bi bi-x-circle"></i>
+        </div>
       </div>
       <div class="footer">
-        {{ 1000 | number }} €
+        {{ game.players[3].money | number }} €
       </div>
     </div>
   </div>
+</div>
+
+<div class="controls">
+  <button (click)="nextPlayer()">Next Player</button>
+  <button (click)="rollDice()">Roll Dice</button>
+  <button (click)="calcPosition(game.players[actualPlayer],dice)">Advance</button>
+  <button (click)="calcPosition(game.players[actualPlayer], 1)">Advance 1</button>
+  <button (click)="buyProperty(game.players[actualPlayer])">Buy</button>
+  <button (click)="sendToJail(game.players[actualPlayer])">Jail</button>
 </div>

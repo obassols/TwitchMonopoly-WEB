@@ -77,6 +77,26 @@
           align-items: center;
         }
       }
+
+      .jail_card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 33%;
+        height: 15%;
+        border: 1px solid black;
+        border-radius: 1vh;
+        background-image: url(/assets/jail.png);
+        background-color: lightsteelblue;
+        background-size: auto 80%;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        i {
+          font-size: 3vh;
+          color: red;
+        }
+      }
     }
 
     .footer {
@@ -306,22 +326,14 @@
   z-index: 2;
   &.player1 {
     background-color: lightblue;
-    bottom: 4vh;
-    right: 4vh;
   }
   &.player2 {
     background-color: lightgreen;
-    bottom: 4vh;
-    right: 1vh;
   }
   &.player3 {
     background-color: tomato;
-    bottom: 1vh;
-    right: 4vh;
   }
   &.player4 {
     background-color: yellow;
-    bottom: 1vh;
-    right: 1vh;
   }
 }

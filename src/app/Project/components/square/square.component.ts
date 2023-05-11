@@ -12,7 +12,6 @@ export class SquareComponent {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.square);
   }
 
   getImgSrc(square: any): string {

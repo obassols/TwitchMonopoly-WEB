@@ -23,8 +23,16 @@ export class ApiService {
     return this.http.get(`${this.serverUrl}/square`, this.createHeader());
   }
 
+  getAllGameSquares(gameId: number) {
+    return this.http.get(`${this.serverUrl}/square/game/${gameId}`, this.createHeader());
+  }
+
   getRents(squareId: number) {
     return this.http.get(`${this.serverUrl}/square/${squareId}/rent`, this.createHeader());
+  }
+
+  getCard(type: string) {
+    return this.http.get(`${this.serverUrl}/card/random/${type}`, this.createHeader());
   }
   
 }
