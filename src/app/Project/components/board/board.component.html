@@ -89,8 +89,8 @@
         </div>
       </div>
       <h1 class="title">MONOPOLY</h1>
-      <div *ngIf="actualSquare" class="big-square">
-        <app-big-square [square]="actualSquare" [card]="actualCard"></app-big-square>
+      <div *ngIf="game.actualSquare" class="big-square">
+        <app-big-square [square]="game.actualSquare" [card]="game.actualCard"></app-big-square>
       </div>
       <div class="chance-deck">
         <h2 class="label">Chance</h2>
@@ -210,8 +210,8 @@
 <div class="controls">
   <button (click)="nextPlayer()">Next Player</button>
   <button (click)="rollDice()">Roll Dice</button>
-  <button (click)="calcPosition(game.players[actualPlayer],dice)">Advance</button>
-  <button (click)="calcPosition(game.players[actualPlayer], 1)">Advance 1</button>
-  <button (click)="buyProperty(game.players[actualPlayer])">Buy</button>
-  <button (click)="sendToJail(game.players[actualPlayer])">Jail</button>
+  <button (click)="calcPosition(game.players[game.actualPlayer],game.dice)">Advance</button>
+  <button (click)="calcPosition(game.players[game.actualPlayer], 1)">Advance 1</button>
+  <button (click)="buyProperty(game.players[game.actualPlayer])">Buy</button>
+  <button (click)="sendToJail(game.players[game.actualPlayer])">Jail</button>
 </div>

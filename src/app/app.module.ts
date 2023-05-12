@@ -7,6 +7,9 @@ import { BoardComponent } from './Project/components/board/board.component';
 import { SquareComponent } from './Project/components/square/square.component';
 import { BigSquareComponent } from './Project/components/big-square/big-square.component';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +20,8 @@ import { BigSquareComponent } from './Project/components/big-square/big-square.c
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]

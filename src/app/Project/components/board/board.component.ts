@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
     selector: 'app-board',
@@ -8,21 +9,21 @@ import { ApiService } from '../../services/api.service';
 })
 export class BoardComponent implements OnInit {
 
-    constructor(private apiService: ApiService) { }
+    constructor(private apiService: ApiService, private socketService: SocketService) { }
     game = {
         id: 1,
         taxes: 0,
         turn: 1,
         squares: Array<any>(),
         players: Array<any>(),
+        dice: 0,
+        actualPlayer: 0,
+        actualSquare: null,
+        actualCard: null,
     };
-    rows = Array<any>();
 
-    dice = 0;
-    actualPlayer = 0;
+    rows = Array<any>();
     timeoutSquare: any;
-    actualSquare: any;
-    actualCard: any;
 
     ngOnInit() {
         this.apiService.getAllGameSquares(this.game.id).subscribe((res: any) => {
@@ -91,87 +92,25 @@ export class BoardComponent implements OnInit {
                 jail: false,
             },
         ];
-        /*         this.properties = [
-                    {
-                        shortName: 'MA',
-                        upgrades: 3,
-                        color: 'brown',
-                    },
-                    {
-                        shortName: 'BA',
-                        upgrades: 5,
-                        color: 'brown',
-                    },
-                    {
-                        shortName: 'MA',
-                        upgrades: 3,
-                        color: 'brown',
-                    },
-                    {
-                        shortName: 'BA',
-                        upgrades: 5,
-                        color: 'brown',
-                    },
-                    {
-                        shortName: 'MA',
-                        upgrades: -1,
-                        color: 'brown',
-                    },
-                    {
-                        shortName: 'BA',
-                        upgrades: 5,
-                        color: 'brown',
-                    },
-                    {
-                        shortName: 'MA',
-                        upgrades: 3,
-                        color: 'brown',
-                    },
-                    {
-                        shortName: 'NCA',
-                        upgrades: 0,
-                        color: 'green',
-                    },
-                    {
-                        shortName: 'MA',
-                        upgrades: 3,
-                        color: 'brown',
-                    },
-                    {
-                        shortName: 'SCP',
-                        upgrades: 5,
-                        color: 'pink',
-                    },
-                    {
-                        shortName: 'MA',
-                        upgrades: 3,
-                        color: 'brown',
-                    },
-                    {
-                        shortName: 'BA',
-                        upgrades: 5,
-                        color: 'brown',
-                    },
-                    {
-                        shortName: 'OA',
-                        upgrades: 2,
-                        color: 'lightblue',
-                    },
-                ]; */
+        this.socketService.setGame(this.game);
+        this.socketService.getGame();
+        this.socketService.game.subscribe((game: any) => {
+            this.game = game;
+        });
     }
 
     nextPlayer() {
-        if (this.actualPlayer < this.game.players.length - 1) {
-            this.actualPlayer++;
+        if (this.game.actualPlayer < this.game.players.length - 1) {
+            this.game.actualPlayer++;
         } else {
-            this.actualPlayer = 0;
+            this.game.actualPlayer = 0;
         }
     }
 
     rollDice() {
-        this.dice = Math.floor(Math.random() * 6) + 1;
-        console.log('Dice: ' + this.dice);
-        return this.dice;
+        this.game.dice = Math.floor(Math.random() * 6) + 1;
+        console.log('Dice: ' + this.game.dice);
+        return this.game.dice;
     }
 
     calcPosition(player: any, dice: number) {
@@ -184,12 +123,13 @@ export class BoardComponent implements OnInit {
         const square = this.game.squares.find((square: any) => square.id == player.position);
         if (square.type !== 'go' && square.type !== 'jail' && square.type !== 'free_parking' && square.type !== 'go_to_jail') {
             clearTimeout(this.timeoutSquare);
-            this.actualSquare = square;
+            this.game.actualSquare = square;
             this.timeoutSquare = setTimeout(() => {
-                this.actualSquare = null;
+                this.game.actualSquare = null;
+                this.socketService.setGame(this.game);
             }, 3000);
         } else {
-            this.actualSquare = null;
+            this.game.actualSquare = null;
         }
         this.calcActions(player, square);
         return player.position;
@@ -322,7 +262,7 @@ export class BoardComponent implements OnInit {
 
     calcCard(card: any, player: any) {
         console.log(card);
-        this.actualCard = card;
+        this.game.actualCard = card;
         if (card.action === 'PAY') {
             if (card.target === 'PLAYER') {
                 this.game.players.forEach((p: any) => {
@@ -357,13 +297,15 @@ export class BoardComponent implements OnInit {
             setTimeout(() => {
                 if (square.type !== 'go' && square.type !== 'jail' && square.type !== 'free_parking' && square.type !== 'go_to_jail') {
                     clearTimeout(this.timeoutSquare);
-                    this.actualSquare = square;
+                    this.game.actualSquare = square;
                     this.timeoutSquare = setTimeout(() => {
-                        this.actualSquare = null;
+                        this.game.actualSquare = null;
+                        this.socketService.setGame(this.game);
                     }, 3000);
                 } else {
-                    this.actualSquare = null;
+                    this.game.actualSquare = null;
                 }
+                this.socketService.setGame(this.game);
             }, 1000);
             this.calcActions(player, square);
         } else if (card.action === 'ADVANCE_CONDITIONAL') {
@@ -376,6 +318,7 @@ export class BoardComponent implements OnInit {
             player.cards.push(card);
             console.log(player.cards);
         }
+        this.socketService.setGame(this.game);
     }
 
     calcActions(player: any, square: any) {
@@ -398,5 +341,6 @@ export class BoardComponent implements OnInit {
                 this.calcCard(res, player);
             });
         }
+        this.socketService.setGame(this.game);
     }
 }
