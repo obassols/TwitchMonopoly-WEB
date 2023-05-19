@@ -1,0 +1,33 @@
+<h1>STREAMER</h1>
+<div>
+  <a class="btn btn-primary" routerLink="/board" target="_blank">Board</a>
+</div>
+<br>
+<div class="controls">
+  <div>
+    <button *ngIf="!game.playing" (click)="startGame()" class="btn btn-success">Start</button>
+    <button (click)="reset()" class="btn btn-warning">Reset</button>
+    <br><br>
+    <div *ngIf="game.players.length > 0" class="d-flex">
+      <select [(ngModel)]="selectedPlayer" class="form-select w-25">
+        <option *ngFor="let player of game.players" [value]="player.id">{{ player.name }}</option>
+      </select>
+      <button type="button" class="btn btn-danger" (click)="kickPlayer(selectedPlayer)">Kick</button>
+    </div>
+  </div>
+  <br>
+  <div *ngIf="game.playing && game.players[game.actualPlayer].id == streamer.id">
+    <button *ngIf="actionAllowed('roll')" (click)="sendAction('roll')" class="btn btn-primary">Roll</button>
+    <button *ngIf="actionAllowed('pay')" (click)="sendAction('pay')" class="btn btn-secondary">Pay</button>
+    <button *ngIf="actionAllowed('buy')" (click)="sendAction('buy')" class="btn btn-success">Buy</button>
+    <button *ngIf="actionAllowed('upgrade')" (click)="sendAction('upgrade')" class="btn btn-success">Upgrade</button>
+    <button *ngIf="actionAllowed('downgrade')" (click)="sendAction('downgrade')" class="btn btn-warning">Downgrade</button>
+    <button *ngIf="actionAllowed('mortgage')" (click)="sendAction('mortgage')" class="btn btn-warning">Mortgage</button>
+    <button *ngIf="actionAllowed('unmortgage')" (click)="sendAction('unmortgage')" class="btn btn-success">Unmortgage</button>
+    <button *ngIf="actionAllowed('jailcard')" (click)="sendAction('jailcard')" class="btn btn-primary">Free Jail Card</button>
+    <button *ngIf="actionAllowed('skip')" (click)="sendAction('skip')" class="btn btn-secondary">Skip</button>
+    <button *ngIf="actionAllowed('forfait')" (click)="sendAction('forfait')" class="btn btn-danger">Forfait</button>
+  </div>
+</div>
+
+<app-board></app-board>
