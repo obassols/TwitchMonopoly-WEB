@@ -4,9 +4,10 @@
   box-sizing: border-box;
 }
 
-.table {
+.m-table {
   width: 100vw;
   height: 100vh;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -251,7 +252,7 @@
   letter-spacing: 3px;
 }
 
-.row {
+.m-row {
   display: flex;
 
   .square:nth-child(1) {

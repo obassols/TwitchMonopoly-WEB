@@ -1,11 +1,11 @@
-<div class="table">
+<div class="m-table">
   <div class="players">
-    <div class="player player1">
+    <div class="player player1" *ngIf="findPlayer(1)">
       <div class="header">
-          {{ 'PLAYER 1' }}
+          {{ findPlayer(1).name }}
       </div>
       <div class="squares">
-        <div *ngFor="let property of game.players[0].properties" class="property">
+        <div *ngFor="let property of findPlayer(1).properties" class="property">
           <div *ngIf="property.type === 'property'" class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
           <div *ngIf="property.type === 'station'" class="bar" [ngStyle]="{ 'background-color': 'black' }"></div>
           <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
@@ -22,7 +22,7 @@
               <i class="bi bi-gear-fill" style="color:green"></i>
             </div>
             <div *ngIf="property.upgrades > -1 && property.upgrades < 5 && property.type === 'property'">
-              {{ property.upgrades }}
+              {{ property.upgrades ? property.upgrades : 'X' }}
               <i class="bi bi-house-fill" style="color:green"></i>
             </div>
             <div *ngIf="property.upgrades == 5">
@@ -31,21 +31,21 @@
             </div>
           </div>
         </div>
-        <div *ngFor="let card of game.players[0].cards" class="jail_card"
+        <div *ngFor="let card of findPlayer(1).cards" class="jail_card"
           [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
           <i class="bi bi-x-circle"></i>
         </div>
       </div>
       <div class="footer">
-        {{ game.players[0].money | number }} €
+        {{ findPlayer(1).money | number }} €
       </div>
     </div>
-    <div class="player player3">
+    <div class="player player3" *ngIf="findPlayer(3)">
       <div class="header">
-        {{ 'PLAYER 3' }}
+        {{ findPlayer(3).name }}
       </div>
       <div class="squares">
-        <div *ngFor="let property of game.players[2].properties" class="property">
+        <div *ngFor="let property of findPlayer(3).properties" class="property">
           <div *ngIf="property.type === 'property'" class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
           <div *ngIf="property.type === 'station'" class="bar" [ngStyle]="{ 'background-color': 'black' }"></div>
           <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
@@ -71,12 +71,12 @@
             </div>
           </div>
         </div>
-        <div *ngFor="let card of game.players[2].cards" class="jail_card" [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
+        <div *ngFor="let card of findPlayer(3).cards" class="jail_card" [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
           <i class="bi bi-x-circle"></i>
         </div>
       </div>
       <div class="footer">
-        {{ game.players[2].money | number }} €
+        {{ findPlayer(3).money | number }} €
       </div>
     </div>
   </div>
@@ -89,7 +89,7 @@
         </div>
       </div>
       <h1 class="title">MONOPOLY</h1>
-      <div *ngIf="game.actualSquare" class="big-square">
+      <div *ngIf="displaySquare(game.actualSquare)" class="big-square">
         <app-big-square [square]="game.actualSquare" [card]="game.actualCard"></app-big-square>
       </div>
       <div class="chance-deck">
@@ -99,22 +99,22 @@
         </div>
       </div>
     </div>
-    <div class="row row-0">
+    <div class="m-row row-0">
       <div class="square" *ngFor="let square of rows[0]">
         <app-square [square]="square" [direction]="'bottom'"></app-square>
       </div>
     </div>
-    <div class="row row-1">
+    <div class="m-row row-1">
       <div class="square" *ngFor="let square of rows[1]">
         <app-square [square]="square" [direction]="'left'"></app-square>
       </div>
     </div>
-    <div class="row row-2">
+    <div class="m-row row-2">
       <div class="square" *ngFor="let square of rows[2]">
         <app-square [square]="square" [direction]="'top'"></app-square>
       </div>
     </div>
-    <div class="row row-3">
+    <div class="m-row row-3">
       <div class="square" *ngFor="let square of rows[3]">
         <app-square [square]="square" [direction]="'right'"></app-square>
       </div>
@@ -126,12 +126,12 @@
     </div>
   </div>
   <div class="players">
-    <div class="player player2">
+    <div class="player player2" *ngIf="findPlayer(2)">
       <div class="header">
-        {{ 'PLAYER 2' }}
+        {{ findPlayer(2).name }}
       </div>
       <div class="squares">
-        <div *ngFor="let property of game.players[1].properties" class="property">
+        <div *ngFor="let property of findPlayer(2).properties" class="property">
           <div *ngIf="property.type === 'property'" class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
           <div *ngIf="property.type === 'station'" class="bar" [ngStyle]="{ 'background-color': 'black' }"></div>
           <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
@@ -157,20 +157,20 @@
             </div>
           </div>
         </div>
-        <div *ngFor="let card of game.players[1].cards" class="jail_card" [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
+        <div *ngFor="let card of findPlayer(2).cards" class="jail_card" [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
           <i class="bi bi-x-circle"></i>
         </div>
       </div>
       <div class="footer">
-        {{ game.players[1].money | number }} €
+        {{ findPlayer(2).money | number }} €
       </div>
     </div>
-    <div class="player player4">
+    <div class="player player4" *ngIf="findPlayer(4)">
       <div class="header">
-        {{ 'PLAYER 4' }}
+        {{ findPlayer(4).name }}
       </div>
       <div class="squares">
-        <div *ngFor="let property of game.players[3].properties" class="property">
+        <div *ngFor="let property of findPlayer(4).properties" class="property">
           <div *ngIf="property.type === 'property'" class="bar" [ngStyle]="{ 'background-color': property.color }"></div>
           <div *ngIf="property.type === 'station'" class="bar" [ngStyle]="{ 'background-color': 'black' }"></div>
           <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
@@ -196,22 +196,13 @@
             </div>
           </div>
         </div>
-        <div *ngFor="let card of game.players[3].cards" class="jail_card" [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
+        <div *ngFor="let card of findPlayer(4).cards" class="jail_card" [ngStyle]="{ 'background-image' : 'assets/jail.png' }">
           <i class="bi bi-x-circle"></i>
         </div>
       </div>
       <div class="footer">
-        {{ game.players[3].money | number }} €
+        {{ findPlayer(4).money | number }} €
       </div>
     </div>
   </div>
-</div>
-
-<div class="controls">
-  <button (click)="nextPlayer()">Next Player</button>
-  <button (click)="rollDice()">Roll Dice</button>
-  <button (click)="calcPosition(game.players[game.actualPlayer],game.dice)">Advance</button>
-  <button (click)="calcPosition(game.players[game.actualPlayer], 1)">Advance 1</button>
-  <button (click)="buyProperty(game.players[game.actualPlayer])">Buy</button>
-  <button (click)="sendToJail(game.players[game.actualPlayer])">Jail</button>
 </div>
