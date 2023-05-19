@@ -12,15 +12,23 @@ export class SocketService {
 
   constructor(private socket: Socket) { }
 
-  getPlayers() {
-    return this.socket.emit('getPlayers');
-  }
-
   getGame() {
     return this.socket.emit('getGame');
   }
 
-  setGame(game: any) {
-    return this.socket.emit('setGame', game);
+  sendAction(action: any) {
+    return this.socket.emit('action', action);
+  }
+
+  startGame() {
+    return this.socket.emit('startGame');
+  }
+
+  resetGame() {
+    return this.socket.emit('resetGame');
+  }
+
+  kickPlayer(player: string) {
+    return this.socket.emit('kickPlayer', player);
   }
 }
