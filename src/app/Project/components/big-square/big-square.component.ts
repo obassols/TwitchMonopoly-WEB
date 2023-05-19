@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-big-square',
@@ -10,12 +9,9 @@ export class BigSquareComponent {
   @Input() square: any;
   @Input() card: any;
 
-  constructor(private apiService: ApiService) { }
+  constructor() { }
 
   ngOnChanges(): void {
-    if (this.square.type === 'supply' || this.square.type === 'station' || this.square.type === 'property') {
-      this.getRents(this.square);
-    }
   }
 
   getImgSrc(square: any): string {
@@ -42,12 +38,5 @@ export class BigSquareComponent {
         : undefined;
 
     return imageUrl ?? 'defaultImageUrl';
-  }
-
-  getRents(square: any): void {
-    this.apiService.getRents(square.id).subscribe((res: any) => {
-      square.rents = res;
-      console.log(res);
-    });
   }
 }
