@@ -3,21 +3,21 @@
         && square.type !== 'go'
         && square.type !== 'free_parking'
         && square.type !== 'go_to_jail'"
-  class="card" [ngClass]="[square.type, direction]">
+  class="model" [ngClass]="[square.type, direction]">
     <h2>{{ square.name }}</h2>
     <img [src]="getImgSrc(square)" />
 </div>
 
-<div *ngIf="square.type === 'property'" class="card" [ngClass]="[direction]">
+<div *ngIf="square.type === 'property'" class="model" [ngClass]="[direction]">
   <div class="property-bar" [ngStyle]="{ 'background-color': square.color }"></div>
   <h2>{{ square.shortName }}</h2>
 </div>
 
-<div *ngIf="square.type === 'go'" class="card go">
+<div *ngIf="square.type === 'go'" class="model go">
   <img src="assets/go.png" />
 </div>
 
-<div *ngIf="square.type === 'jail'" class="card jail">
+<div *ngIf="square.type === 'jail'" class="model jail">
   <div class="jail-top">
     <div class="jail-col">
       <p>Just</p>
@@ -31,7 +31,7 @@
   </div>
 </div>
 
-<div *ngIf="square.type === 'free_parking'" class="card">
+<div *ngIf="square.type === 'free_parking'" class="model">
   <div class="parking">
     <p>Free</p>
     <p>Parking</p>
@@ -39,7 +39,7 @@
   </div>
 </div>
 
-<div *ngIf="square.type === 'go_to_jail'" class="card">
+<div *ngIf="square.type === 'go_to_jail'" class="model">
   <div class="go_to_jail">
     <p>Go to</p>
     <p>JAIL</p>
