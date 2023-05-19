@@ -8,6 +8,9 @@ import { SquareComponent } from './Project/components/square/square.component';
 import { BigSquareComponent } from './Project/components/big-square/big-square.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { StreamerPageComponent } from './Project/components/streamer-page/streamer-page.component';
+import { FormsModule } from '@angular/forms';
+import { MessagePageComponent } from './Project/components/message-page/message-page.component';
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
@@ -15,11 +18,14 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     AppComponent,
     BoardComponent,
     SquareComponent,
-    BigSquareComponent
+    BigSquareComponent,
+    StreamerPageComponent,
+    MessagePageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule,
     SocketIoModule.forRoot(config)
   ],
