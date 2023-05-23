@@ -8,8 +8,6 @@ import { SocketService } from '../../services/socket.service';
 })
 export class BoardComponent implements OnInit {
 
-    constructor(private socketService: SocketService) { }
-
     basePlayers = [
         {
             id: 1,
@@ -70,7 +68,8 @@ export class BoardComponent implements OnInit {
         turn: 1,
         squares: Array<any>(),
         players: Array<any>(),
-        dice: 0,
+        dice: Array<number>(),
+        actions: Array<any>(),
         actualPlayer: 0,
         actualSquare: undefined,
         actualCard: undefined,
@@ -78,17 +77,27 @@ export class BoardComponent implements OnInit {
     };
 
     rows = Array<any>();
-    timeoutSquare: any;
+    displayDice: boolean = false;
+    displaySquare: boolean = false;
+    squareTimeout: any;
+
+    constructor(private socketService: SocketService) { }
 
     ngOnInit() {
         this.game.players = this.basePlayers;
         this.socketService.getGame();
         this.socketService.game.subscribe((game: any) => {
             this.game = game;
+            this.calcDisplaySquare(this.game.actualSquare);
             this.calcCoordsAll();
             console.log(this.game);
             if (this.game.squares.length > 0) {
                 this.calcRows();
+            }
+            if (this.game.actions.includes('roll')) {
+                this.displayDice = false;
+            } else {
+                this.displayDice = true;
             }
         });
     }
@@ -149,15 +158,25 @@ export class BoardComponent implements OnInit {
         return this.game.players.find((player: any) => player.id == id);
     }
 
-    displaySquare(square: any) {
-        if (!square) return false;
-        if (square.type !== 'go'
-            && square.type !== 'jail'
-            && square.type !== 'free_parking'
-            && square.type !== 'go_to_jail') {
-            return true;
-        } else {
-            return false;
+    isActivePlayer(id: number) {
+        return this.game.players[this.game.actualPlayer].id == id;
+    }
+
+    calcDisplaySquare(square: any) {
+        if (!square) {
+            this.displaySquare = false;
+            return;
         }
+        if (this.squareTimeout) clearTimeout(this.squareTimeout);
+        this.squareTimeout = setTimeout(() => {
+            if (square.type !== 'go'
+                && square.type !== 'jail'
+                && square.type !== 'free_parking'
+                && square.type !== 'go_to_jail') {
+                this.displaySquare = true;
+            } else {
+                this.displaySquare = false;
+            }
+        }, 3000);
     }
 }

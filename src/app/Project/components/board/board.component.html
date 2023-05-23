@@ -1,6 +1,6 @@
 <div class="m-table">
   <div class="players">
-    <div class="player player1" *ngIf="findPlayer(1)">
+    <div class="player player1" *ngIf="findPlayer(1)" [ngClass]="{'active' : isActivePlayer(1) }">
       <div class="header">
           {{ findPlayer(1).name }}
       </div>
@@ -40,7 +40,7 @@
         {{ findPlayer(1).money | number }} €
       </div>
     </div>
-    <div class="player player3" *ngIf="findPlayer(3)">
+    <div class="player player3" *ngIf="findPlayer(3)" [ngClass]="{'active' : isActivePlayer(3) }">
       <div class="header">
         {{ findPlayer(3).name }}
       </div>
@@ -89,7 +89,11 @@
         </div>
       </div>
       <h1 class="title">MONOPOLY</h1>
-      <div *ngIf="displaySquare(game.actualSquare)" class="big-square">
+      <div *ngIf="displayDice && !displaySquare" class="dices">
+        <div class="dice">{{ game.dice[0] }}</div>
+        <div class="dice">{{ game.dice[1] }}</div>
+      </div>
+      <div *ngIf="displaySquare" class="big-square">
         <app-big-square [square]="game.actualSquare" [card]="game.actualCard"></app-big-square>
       </div>
       <div class="chance-deck">
@@ -126,7 +130,7 @@
     </div>
   </div>
   <div class="players">
-    <div class="player player2" *ngIf="findPlayer(2)">
+    <div class="player player2" *ngIf="findPlayer(2)" [ngClass]="{'active' : isActivePlayer(2) }">
       <div class="header">
         {{ findPlayer(2).name }}
       </div>
@@ -165,7 +169,7 @@
         {{ findPlayer(2).money | number }} €
       </div>
     </div>
-    <div class="player player4" *ngIf="findPlayer(4)">
+    <div class="player player4" *ngIf="findPlayer(4)" [ngClass]="{'active' : isActivePlayer(4) }">
       <div class="header">
         {{ findPlayer(4).name }}
       </div>

@@ -11,10 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: seagreen;
-  // Si es vol fer gran el taulell amb el zoom, descomentar això
-  /* overflow: hidden;
-  position: relative; */
+  background: seagreen;
 }
 
 .players {
@@ -25,6 +22,8 @@
   width: 17vw;
   height: 90vh;
   font-family: 'Bruno Ace', cursive;
+  margin: 1vw;
+  z-index: 1;
 
   .player {
     display: flex;
@@ -108,55 +107,73 @@
       height: 10%;
       border-top: 1px solid black;
     }
+
+    &1 {
+      .header {
+        background-color: lightblue;
+      }
+
+      .footer {
+        background-color: lightblue;
+      }
+    }
+
+    &2 {
+      .header {
+        background-color: lightgreen;
+      }
+
+      .footer {
+        background-color: lightgreen;
+      }
+    }
+
+    &3 {
+      .header {
+        background-color: tomato;
+      }
+
+      .footer {
+        background-color: tomato;
+      }
+    }
+
+    &4 {
+      .header {
+        background-color: yellow;
+      }
+
+      .footer {
+        background-color: yellow;
+      }
+    }
+
+    &.active {
+      animation: animate 2s infinite;
+      position: relative;
+    }
+
+    &.active::before,
+    &.active::after {
+      content: '';
+      position: absolute;
+      top: -1vh;
+      left: -1vh;
+      background: linear-gradient(90deg, white, darkviolet, darkviolet, white);
+      background-size: 400%;
+      width: calc(100% + 2vh);
+      height: calc(100% + 2vh);
+      z-index: -1;
+      animation: animate 20s linear infinite;
+    }
+
+    &.active::after {
+      filter: blur(20px);
+    }
   }
-
-  .player1 {
-    .header {
-      background-color: lightblue;
-    }
-
-    .footer {
-      background-color: lightblue;
-    }
-  }
-
-  .player2 {
-    .header {
-      background-color: lightgreen;
-    }
-
-    .footer {
-      background-color: lightgreen;
-    }
-  }
-
-  .player3 {
-    .header {
-      background-color: tomato;
-    }
-
-    .footer {
-      background-color: tomato;
-    }
-  }
-
-  .player4 {
-    .header {
-      background-color: yellow;
-    }
-
-    .footer {
-      background-color: yellow;
-    }
-  }
-
 }
 
 .board {
-  // Si es vol fer gran el taulell amb el zoom, descomentar això
-  /* position: absolute;
-  top: calc(-40vh);
-  transform: scale(1.4) rotate(-90deg); */
   position: relative;
   display: grid;
   grid-template-columns: 11.25vh repeat(9, 7.5vh) 11.25vh;
@@ -194,6 +211,27 @@
   font-size: 8vh;
 }
 
+.dices {
+  grid-area: 2 / 2;
+  height: 30vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .dice {
+    width: 10vh;
+    height: 10vh;
+    border: 2px solid black;
+    border-radius: 1vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vh;
+    font-weight: 500;
+    background-color: white;
+  }
+}
+
 .big-square {
   grid-area: 2 / 2;
   width: 25vh;
@@ -211,6 +249,7 @@
   min-width: 15vh;
   min-height: 11.25vh;
   align-self: center;
+
   img {
     width: 60%;
   }
@@ -282,10 +321,6 @@
     width: 11.25vh;
     height: 7.5vh;
     position: relative;
-    /* height: 11.25vh;
-    width: 7.5vh;
-    overflow: hidden;
-    transform: rotate(90deg); */
   }
 }
 
@@ -325,16 +360,30 @@
   border-radius: 50%;
   border: 1px solid black;
   z-index: 2;
+
   &.player1 {
     background-color: lightblue;
   }
+
   &.player2 {
     background-color: lightgreen;
   }
+
   &.player3 {
     background-color: tomato;
   }
+
   &.player4 {
     background-color: yellow;
+  }
+}
+
+@keyframes animate {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 400% 0;
   }
 }
