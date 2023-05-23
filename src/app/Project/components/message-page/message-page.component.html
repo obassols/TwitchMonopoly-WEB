@@ -1,0 +1,7 @@
+<div class="container" *ngIf="game && game.players[game.actualPlayer].role !== 'streamer'">
+  <div class="text" [ngClass]="['color-' + game.actualPlayer]">
+    <span *ngFor="let action of game.actions">
+      !m {{ action }}
+    </span>
+  </div>
+</div>

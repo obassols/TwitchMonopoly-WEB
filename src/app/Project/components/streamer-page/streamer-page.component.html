@@ -1,6 +1,7 @@
 <h1>STREAMER</h1>
 <div>
   <a class="btn btn-primary" routerLink="/board" target="_blank">Board</a>
+  <a class="btn btn-primary" routerLink="/messages" target="_blank">Messages</a>
 </div>
 <br>
 <div class="controls">
@@ -29,5 +30,3 @@
     <button *ngIf="actionAllowed('forfait')" (click)="sendAction('forfait')" class="btn btn-danger">Forfait</button>
   </div>
 </div>
-
-<app-board></app-board>
