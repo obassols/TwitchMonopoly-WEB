@@ -22,11 +22,14 @@
     <button *ngIf="actionAllowed('pay')" (click)="sendAction('pay')" class="btn btn-secondary">Pay</button>
     <button *ngIf="actionAllowed('buy')" (click)="sendAction('buy')" class="btn btn-success">Buy</button>
     <button *ngIf="actionAllowed('upgrade')" (click)="sendAction('upgrade')" class="btn btn-success">Upgrade</button>
-    <button *ngIf="actionAllowed('downgrade')" (click)="sendAction('downgrade')" class="btn btn-warning">Downgrade</button>
+    <button *ngIf="actionAllowed('downgrade')" (click)="sendAction('downgrade')"
+      class="btn btn-warning">Downgrade</button>
     <button *ngIf="actionAllowed('mortgage')" (click)="sendAction('mortgage')" class="btn btn-warning">Mortgage</button>
-    <button *ngIf="actionAllowed('unmortgage')" (click)="sendAction('unmortgage')" class="btn btn-success">Unmortgage</button>
-    <button *ngIf="actionAllowed('jailcard')" (click)="sendAction('jailcard')" class="btn btn-primary">Free Jail Card</button>
+    <button *ngIf="actionAllowed('unmortgage')" (click)="sendAction('unmortgage')"
+      class="btn btn-success">Unmortgage</button>
+    <button *ngIf="actionAllowed('jailcard')" (click)="sendAction('jailcard')" class="btn btn-primary">Free Jail
+      Card</button>
     <button *ngIf="actionAllowed('skip')" (click)="sendAction('skip')" class="btn btn-secondary">Skip</button>
-    <button *ngIf="actionAllowed('forfait')" (click)="sendAction('forfait')" class="btn btn-danger">Forfait</button>
+    <button *ngIf="actionAllowed('forfeit')" (click)="sendAction('forfeit')" class="btn btn-danger">Forfeit</button>
   </div>
 </div>
