@@ -1,4 +1,10 @@
-<div class="container" *ngIf="game && game.players[game.actualPlayer].role !== 'streamer'">
+<div class="container" *ngIf="game && !game.playing">
+  <div class="text" >
+    <span>!m join</span>
+  </div>
+</div>
+
+<div class="container" *ngIf="game && game.playing && game.players[game.actualPlayer].role !== 'streamer'">
   <div class="text" [ngClass]="['color-' + game.actualPlayer]">
     <span *ngFor="let action of game.actions">
       !m {{ action }}
