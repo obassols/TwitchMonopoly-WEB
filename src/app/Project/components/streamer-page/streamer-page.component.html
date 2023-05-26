@@ -1,23 +1,22 @@
-<h1>STREAMER</h1>
-<div>
-  <a class="btn btn-primary" routerLink="/board" target="_blank">Board</a>
-  <a class="btn btn-primary" routerLink="/messages" target="_blank">Messages</a>
-</div>
-<br>
-<div class="controls">
-  <div>
+<div class="d-flex justify-content-center">
+<div class="card">
+  <h1>Streamer Pannel</h1>
+  <br>
+  <div class="d-flex mb-3">
+    <a class="btn btn-primary" routerLink="/board" target="_blank">Board</a>
+    <a class="btn btn-primary" routerLink="/messages" target="_blank">Messages</a>
+  </div>
+  <div class="d-flex mb-3">
     <button *ngIf="!game.playing" (click)="startGame()" class="btn btn-success">Start</button>
     <button (click)="reset()" class="btn btn-warning">Reset</button>
-    <br><br>
-    <div *ngIf="game.players.length > 0" class="d-flex">
-      <select [(ngModel)]="selectedPlayer" class="form-select w-25">
-        <option *ngFor="let player of game.players" [value]="player.id">{{ player.name }}</option>
-      </select>
-      <button type="button" class="btn btn-danger" (click)="kickPlayer(selectedPlayer)">Kick</button>
-    </div>
   </div>
-  <br>
-  <div *ngIf="game.playing && game.players[game.actualPlayer].id == streamer.id">
+  <div *ngIf="game.players.length > 0" class="d-flex mb-3">
+    <select [(ngModel)]="selectedPlayer" class="form-select">
+      <option *ngFor="let player of game.players" [value]="player.id">{{ player.name }}</option>
+    </select>
+    <button type="button" class="btn btn-danger" (click)="kickPlayer(selectedPlayer)">Kick</button>
+  </div>
+  <div *ngIf="game.playing && game.players[game.actualPlayer].id == streamer.id" class="mb-2 d-flex">
     <button *ngIf="actionAllowed('roll')" (click)="sendAction('roll')" class="btn btn-primary">Roll</button>
     <button *ngIf="actionAllowed('pay')" (click)="sendAction('pay')" class="btn btn-secondary">Pay</button>
     <button *ngIf="actionAllowed('buy')" (click)="sendAction('buy')" class="btn btn-success">Buy</button>
@@ -32,4 +31,5 @@
     <button *ngIf="actionAllowed('skip')" (click)="sendAction('skip')" class="btn btn-secondary">Skip</button>
     <button *ngIf="actionAllowed('forfeit')" (click)="sendAction('forfeit')" class="btn btn-danger">Forfeit</button>
   </div>
+</div>
 </div>
