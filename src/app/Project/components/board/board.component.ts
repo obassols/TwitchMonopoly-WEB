@@ -165,6 +165,7 @@ export class BoardComponent implements OnInit {
     calcDisplaySquare(square: any) {
         if (!square) {
             this.displaySquare = false;
+            if (this.squareTimeout) clearTimeout(this.squareTimeout);
             return;
         }
         if (this.squareTimeout) clearTimeout(this.squareTimeout);

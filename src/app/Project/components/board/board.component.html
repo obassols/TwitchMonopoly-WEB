@@ -11,21 +11,21 @@
           <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
           <div class="body">
             <div [ngStyle]="{'color': property.upgrades > -1 ? 'black' : 'red'}">{{ property.shortName }}</div>
-            <div *ngIf="property.upgrades < 0 && property.type === 'property'">
-              <i class="bi bi-house-slash-fill" style="color:red"></i>
-            </div>
-            <div *ngIf="property.type !== 'property' && property.upgrades < 0">
+            <div *ngIf="property.type !== 'property' && property.state === 'mortgaged'">
               <i class="bi bi-gear-fill" style="color:red"></i>
             </div>
-            <div *ngIf="property.type !== 'property' && property.upgrades > -1">
+            <div *ngIf="property.type !== 'property' && property.state !== 'mortgaged'">
               {{ property.upgrades }}
               <i class="bi bi-gear-fill" style="color:green"></i>
             </div>
-            <div *ngIf="property.upgrades > -1 && property.upgrades < 5 && property.type === 'property'">
-              {{ property.upgrades ? property.upgrades : 'X' }}
+            <div *ngIf="property.type === 'property' && property.state === 'mortgaged'">
+              <i class="bi bi-house-slash-fill" style="color:red"></i>
+            </div>
+            <div *ngIf="property.upgrades < 5 && property.type === 'property' && property.state !== 'mortgaged'">
+              {{ property.upgrades }}
               <i class="bi bi-house-fill" style="color:green"></i>
             </div>
-            <div *ngIf="property.upgrades == 5">
+            <div *ngIf="property.upgrades == 5 && property.state !== 'mortgaged'">
               1
               <i class="bi bi-building-fill" style="color:red"></i>
             </div>
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="footer">
-        {{ findPlayer(1).money | number }} €
+        <span *ngIf="findPlayer(1).money > -1">{{ findPlayer(1).money | number }} €</span>
       </div>
     </div>
     <div class="player player3" *ngIf="findPlayer(3)" [ngClass]="{'active' : isActivePlayer(3) }">
@@ -51,21 +51,21 @@
           <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
           <div class="body">
             <div [ngStyle]="{'color': property.upgrades > -1 ? 'black' : 'red'}">{{ property.shortName }}</div>
-            <div *ngIf="property.upgrades < 0 && property.type === 'property'">
-              <i class="bi bi-house-slash-fill" style="color:red"></i>
-            </div>
-            <div *ngIf="property.type !== 'property' && property.upgrades < 0">
+            <div *ngIf="property.type !== 'property' && property.state === 'mortgaged'">
               <i class="bi bi-gear-fill" style="color:red"></i>
             </div>
-            <div *ngIf="property.type !== 'property' && property.upgrades > -1">
+            <div *ngIf="property.type !== 'property' && property.state !== 'mortgaged'">
               {{ property.upgrades }}
               <i class="bi bi-gear-fill" style="color:green"></i>
             </div>
-            <div *ngIf="property.upgrades > -1 && property.upgrades < 5 && property.type === 'property'">
+            <div *ngIf="property.type === 'property' && property.state === 'mortgaged'">
+              <i class="bi bi-house-slash-fill" style="color:red"></i>
+            </div>
+            <div *ngIf="property.upgrades < 5 && property.type === 'property' && property.state !== 'mortgaged'">
               {{ property.upgrades }}
               <i class="bi bi-house-fill" style="color:green"></i>
             </div>
-            <div *ngIf="property.upgrades == 5">
+            <div *ngIf="property.upgrades == 5 && property.state !== 'mortgaged'">
               1
               <i class="bi bi-building-fill" style="color:red"></i>
             </div>
@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="footer">
-        {{ findPlayer(3).money | number }} €
+        <span *ngIf="findPlayer(3).money > -1">{{ findPlayer(3).money | number }} €</span>
       </div>
     </div>
   </div>
@@ -93,7 +93,7 @@
         <div class="dice">{{ game.dice[0] }}</div>
         <div class="dice">{{ game.dice[1] }}</div>
       </div>
-      <div *ngIf="displaySquare" class="big-square">
+      <div *ngIf="displaySquare && game.actualSquare" class="big-square">
         <app-big-square [square]="game.actualSquare" [card]="game.actualCard"></app-big-square>
       </div>
       <div class="chance-deck">
@@ -141,21 +141,21 @@
           <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
           <div class="body">
             <div [ngStyle]="{'color': property.upgrades > -1 ? 'black' : 'red'}">{{ property.shortName }}</div>
-            <div *ngIf="property.upgrades < 0 && property.type === 'property'">
-              <i class="bi bi-house-slash-fill" style="color:red"></i>
-            </div>
-            <div *ngIf="property.type !== 'property' && property.upgrades < 0">
+            <div *ngIf="property.type !== 'property' && property.state === 'mortgaged'">
               <i class="bi bi-gear-fill" style="color:red"></i>
             </div>
-            <div *ngIf="property.type !== 'property' && property.upgrades > -1">
+            <div *ngIf="property.type !== 'property' && property.state !== 'mortgaged'">
               {{ property.upgrades }}
               <i class="bi bi-gear-fill" style="color:green"></i>
             </div>
-            <div *ngIf="property.upgrades > -1 && property.upgrades < 5 && property.type === 'property'">
+            <div *ngIf="property.type === 'property' && property.state === 'mortgaged'">
+              <i class="bi bi-house-slash-fill" style="color:red"></i>
+            </div>
+            <div *ngIf="property.upgrades < 5 && property.type === 'property' && property.state !== 'mortgaged'">
               {{ property.upgrades }}
               <i class="bi bi-house-fill" style="color:green"></i>
             </div>
-            <div *ngIf="property.upgrades == 5">
+            <div *ngIf="property.upgrades == 5 && property.state !== 'mortgaged'">
               1
               <i class="bi bi-building-fill" style="color:red"></i>
             </div>
@@ -166,7 +166,7 @@
         </div>
       </div>
       <div class="footer">
-        {{ findPlayer(2).money | number }} €
+        <span *ngIf="findPlayer(2).money > -1">{{ findPlayer(2).money | number }} €</span>
       </div>
     </div>
     <div class="player player4" *ngIf="findPlayer(4)" [ngClass]="{'active' : isActivePlayer(4) }">
@@ -180,21 +180,21 @@
           <div *ngIf="property.type === 'supply'" class="bar" [ngStyle]="{ 'background-color': 'gray' }"></div>
           <div class="body">
             <div [ngStyle]="{'color': property.upgrades > -1 ? 'black' : 'red'}">{{ property.shortName }}</div>
-            <div *ngIf="property.upgrades < 0 && property.type === 'property'">
-              <i class="bi bi-house-slash-fill" style="color:red"></i>
-            </div>
-            <div *ngIf="property.type !== 'property' && property.upgrades < 0">
+            <div *ngIf="property.type !== 'property' && property.state === 'mortgaged'">
               <i class="bi bi-gear-fill" style="color:red"></i>
             </div>
-            <div *ngIf="property.type !== 'property' && property.upgrades > -1">
+            <div *ngIf="property.type !== 'property' && property.state !== 'mortgaged'">
               {{ property.upgrades }}
               <i class="bi bi-gear-fill" style="color:green"></i>
             </div>
-            <div *ngIf="property.upgrades > -1 && property.upgrades < 5 && property.type === 'property'">
+            <div *ngIf="property.type === 'property' && property.state === 'mortgaged'">
+              <i class="bi bi-house-slash-fill" style="color:red"></i>
+            </div>
+            <div *ngIf="property.upgrades < 5 && property.type === 'property' && property.state !== 'mortgaged'">
               {{ property.upgrades }}
               <i class="bi bi-house-fill" style="color:green"></i>
             </div>
-            <div *ngIf="property.upgrades == 5">
+            <div *ngIf="property.upgrades == 5 && property.state !== 'mortgaged'">
               1
               <i class="bi bi-building-fill" style="color:red"></i>
             </div>
@@ -205,7 +205,7 @@
         </div>
       </div>
       <div class="footer">
-        {{ findPlayer(4).money | number }} €
+        <span *ngIf="findPlayer(4).money > -1">{{ findPlayer(4).money | number }} €</span>
       </div>
     </div>
   </div>
