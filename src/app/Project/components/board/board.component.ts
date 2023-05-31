@@ -106,6 +106,7 @@ export class BoardComponent implements OnInit {
         this.rows[0] = this.game.squares.filter((square: any) => square.id < 11);
         this.rows[1] = this.game.squares.filter((square: any) => square.id > 10 && square.id < 21);
         this.rows[2] = this.game.squares.filter((square: any) => square.id > 20 && square.id < 31);
+        this.rows[2][0].money = this.game.taxes;
         this.rows[3] = this.game.squares.filter((square: any) => square.id > 30 && square.id < 41);
     }
 
@@ -168,16 +169,17 @@ export class BoardComponent implements OnInit {
             if (this.squareTimeout) clearTimeout(this.squareTimeout);
             return;
         }
-        if (this.squareTimeout) clearTimeout(this.squareTimeout);
-        this.squareTimeout = setTimeout(() => {
-            if (square.type !== 'go'
-                && square.type !== 'jail'
-                && square.type !== 'free_parking'
-                && square.type !== 'go_to_jail') {
+        if (square.type !== 'go'
+            && square.type !== 'jail'
+            && square.type !== 'free_parking'
+            && square.type !== 'go_to_jail') {
+            if (this.squareTimeout) clearTimeout(this.squareTimeout);
+            this.squareTimeout = setTimeout(() => {
                 this.displaySquare = true;
-            } else {
-                this.displaySquare = false;
-            }
-        }, 3000);
+            }, 3000);
+        } else {
+            this.displaySquare = false;
+        }
+
     }
 }

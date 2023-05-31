@@ -126,7 +126,8 @@
   align-items: center;
   flex-direction: column;
   transform: rotate(-45deg);
-
+  position: relative;
+  
   p {
     margin: 0;
     font-size: 1.75vh;
@@ -135,6 +136,27 @@
   img {
     width: 60%;
     object-fit: contain;
+  }
+
+  .money {
+    position: absolute;
+    top: 55%;
+    width: 60%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/assets/euroicon.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    color: white;
+    z-index: 2;
+
+    .symbol {
+      position: absolute;
+      z-index: 1;
+    }
   }
 }
 

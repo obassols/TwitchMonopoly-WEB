@@ -36,6 +36,9 @@
     <p>Free</p>
     <p>Parking</p>
     <img [src]="getImgSrc(square)" />
+    <div *ngIf="square.money && square.money > 0" class="money">
+      <p>{{ square.money }}</p>
+    </div>
   </div>
 </div>
 
